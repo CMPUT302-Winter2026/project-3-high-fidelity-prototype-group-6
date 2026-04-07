@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VocabularyExplorer">
         <activity
+            android:name=".MatchingMinigame"
+            android:exported="false" />
+        <activity
             android:name=".HomeScreen"
             android:exported="true">
             <intent-filter>
@@ -20,7 +23,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".WordMapActivity" />
 
         <meta-data
