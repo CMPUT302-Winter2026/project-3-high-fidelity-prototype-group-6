@@ -4,9 +4,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.WindowCompat;
+import androidx.core.view.WindowInsetsControllerCompat;
+
 import com.google.android.material.slider.Slider;
 
-public class WordMapActivity extends AppCompatActivity {
+public class WordMapScreen extends AppCompatActivity {
 
     private boolean isMenuCollapsed = false;
 
@@ -14,6 +17,8 @@ public class WordMapActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_word_map);
+        WindowInsetsControllerCompat controller = WindowCompat.getInsetsController(getWindow(), getWindow().getDecorView());
+        controller.setAppearanceLightStatusBars(true);
 
         WordMapView wordMapView = findViewById(R.id.wordMapView);
         View topMenuContainer = findViewById(R.id.container);

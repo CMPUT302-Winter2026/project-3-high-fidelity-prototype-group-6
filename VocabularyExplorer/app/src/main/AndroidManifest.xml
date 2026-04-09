@@ -12,10 +12,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VocabularyExplorer">
         <activity
-            android:name=".WordDetail"
+            android:name=".CuratedCategoriesScreen"
             android:exported="false" />
         <activity
-            android:name=".MatchingMinigame"
+            android:name=".WordDetailScreen"
+            android:exported="false" />
+        <activity
+            android:name=".MatchingMinigameScreen"
             android:exported="false" />
         <activity
             android:name=".HomeScreen"
@@ -26,7 +29,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".WordMapActivity" />
+        <activity android:name=".WordMapScreen" />
 
         <meta-data
             android:name="preloaded_fonts"

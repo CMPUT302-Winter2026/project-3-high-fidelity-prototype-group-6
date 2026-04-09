@@ -3,7 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#FEFFE0"
     android:fitsSystemWindows="true">
 
     <!-- The custom WordMapView (Background Layer) -->
@@ -14,7 +13,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:background="#FEFFE0"/>
 
     <!-- Top Menu Container (Foreground Layer) -->
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -39,7 +39,7 @@
             android:layout_width="325dp"
             android:layout_height="56dp"
             android:layout_marginStart="15dp"
-            android:layout_marginTop="55dp"
+            android:layout_marginTop="30dp"
             app:cardCornerRadius="28dp"
             app:cardElevation="4dp"
             app:layout_constraintTop_toTopOf="parent"
@@ -116,7 +116,6 @@
             android:id="@+id/expand_menu"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:layout_marginTop="45dp"
             android:background="@null"
             android:src="@drawable/expand"
             app:layout_constraintTop_toTopOf="parent"
