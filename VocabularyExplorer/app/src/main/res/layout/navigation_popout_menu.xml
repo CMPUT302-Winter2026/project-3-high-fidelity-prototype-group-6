@@ -25,10 +25,10 @@
             app:trackTint="@drawable/switch_track" />
 
         <TextView
+            android:id="@+id/mode_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
-            android:elevation="8dp"
             android:text="Novice Mode"
             android:textSize="16sp"
             android:textColor="@color/black"
