@@ -5,13 +5,14 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CuratedCategoriesScreen"
+    tools:context=".CuratedCategoriesWordsScreen"
     android:fitsSystemWindows="true">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/categories_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingBottom="10dp"
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
@@ -20,32 +21,72 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
             android:fontFamily="@font/inter"
-            android:text="Word Categories"
+            android:text="Category: Placeholder"
             android:textColor="@color/black"
             android:textSize="32sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@id/top_tab_card"
             app:layout_constraintTop_toTopOf="parent"/>
 
-        <View
-            android:layout_width="362dp"
-            android:layout_height="1dp"
-            android:layout_marginTop="15dp"
-            android:background="@color/light_grey"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/top_tab_card"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            app:cardCornerRadius="10dp"
+            app:cardElevation="4dp"
             app:layout_constraintTop_toBottomOf="@id/title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/top_tab_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/light_purple"
+                app:tabBackground="@android:color/transparent"
+                app:tabIndicatorColor="@color/dark_purple"
+                app:tabIndicatorHeight="4dp"
+                app:tabIndicatorGravity="bottom"
+                app:tabIndicatorFullWidth="true"
+                app:tabRippleColor="@android:color/transparent"
+                app:tabSelectedTextColor="@color/dark_purple"
+                app:tabTextColor="@color/dark_grey"
+                app:tabTextAppearance="@style/TextAppearance.AppCompat.Body2">
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Words" />
+
+                <com.google.android.material.tabs.TabItem
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Phrases" />
+
+            </com.google.android.material.tabs.TabLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:fontFamily="@font/inter_light"
+            android:text="Click on any word to see more about it."
+            android:textColor="@color/black"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="@id/top_tab_card"
+            app:layout_constraintTop_toBottomOf="@id/top_tab_card" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="20dp"
         app:layout_constraintTop_toBottomOf="@id/categories_layout">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categories_recyclerview"
+            android:id="@+id/words_recyclerview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
