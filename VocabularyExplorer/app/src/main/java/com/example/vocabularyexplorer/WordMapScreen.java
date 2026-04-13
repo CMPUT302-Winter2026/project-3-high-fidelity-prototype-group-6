@@ -36,10 +36,16 @@ public class WordMapScreen extends AppCompatActivity {
         Intent intent = getIntent();
         String searchString = intent.getStringExtra("search");
         
-        // Update the center word in the map view
         if (searchString != null) {
             wordMapView.setCenterWord(searchString);
         }
+
+        // Handle clicks on map nodes
+        wordMapView.setOnNodeClickListener(word -> {
+            Intent detailIntent = new Intent(WordMapScreen.this, WordDetailScreen.class);
+            detailIntent.putExtra("word_data", word);
+            startActivity(detailIntent);
+        });
 
         searchInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -49,7 +55,6 @@ public class WordMapScreen extends AppCompatActivity {
             return false;
         });
 
-        // Connect Slider to Map Logic
         relatednessSlider.addOnChangeListener((slider, value, fromUser) -> {
             wordMapView.setRelatednessThreshold(value);
         });

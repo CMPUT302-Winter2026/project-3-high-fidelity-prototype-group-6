@@ -30,26 +30,35 @@ public class WordMapView extends View {
     private Paint linePaint;
     private Paint circlePaint;
 
+    private OnNodeClickListener onNodeClickListener;
+
     private static final float CIRCLE_RADIUS = 650f;
 
+    public interface OnNodeClickListener {
+        void onNodeClick(Word word);
+    }
+
+    public void setOnNodeClickListener(OnNodeClickListener listener) {
+        this.onNodeClickListener = listener;
+    }
+
     public static class WordNode {
-        String title;
-        List<String> definitions;
+        Word data;
         float x, y;
         boolean expanded = true;
         int parentIndex = 0;
         float relatedness; // 0.0 (most related/center) to 1.0 (least related)
+        RectF lastDrawnRect = new RectF();
 
-        public WordNode(String title, List<String> definitions, float x, float y, float relatedness) {
-            this.title = title;
-            this.definitions = definitions;
+        public WordNode(Word data, float x, float y, float relatedness) {
+            this.data = data;
             this.x = x;
             this.y = y;
             this.relatedness = relatedness;
         }
 
-        public WordNode(String title, List<String> definitions, float x, float y, int parentIndex, float relatedness) {
-            this(title, definitions, x, y, relatedness);
+        public WordNode(Word data, float x, float y, int parentIndex, float relatedness) {
+            this(data, x, y, relatedness);
             this.parentIndex = parentIndex;
         }
     }
@@ -76,7 +85,7 @@ public class WordMapView extends View {
             loadDefaultData();
         } else {
             nodes.clear();
-            nodes.add(new WordNode(word, new ArrayList<>(), 1000, 1000, 0.0f));
+            nodes.add(new WordNode(new Word(word, ""), 1000, 1000, 0.0f));
         }
         invalidate();
     }
@@ -111,36 +120,34 @@ public class WordMapView extends View {
     private void loadDefaultData() {
         nodes.clear();
         // Relatedness: 0.0 = core, higher = more specific/less related
-        nodes.add(new WordNode("Medicine", new ArrayList<>(), 1000, 1000, 0.0f));
+        nodes.add(new WordNode(new Word("Medicine", ""), 1000, 1000, 0.0f));
 
-        List<String> defs1 = new ArrayList<>();
-        defs1.add("1. nurse");
-        defs1.add("2. woman doctor");
-        defs1.add("3. medicine woman");
-        defs1.add("4. a medicine woman or nurse");
-        nodes.add(new WordNode("maskihkîwiskwêw", defs1, 900, 200, 3, 0.8f));
+        Word nurse = new Word("maskihkîwiskwêw", "1. nurse\n2. woman doctor\n3. medicine woman\n4. a medicine woman or nurse");
+        nurse.setCreePhrase1("maskihkîwiskwêw anima.");
+        nurse.setEnglishPhrase1("That is a nurse.");
+        nodes.add(new WordNode(nurse, 900, 200, 3, 0.8f));
 
-        List<String> defs2 = new ArrayList<>();
-        defs2.add("1. medicine man, herbalist");
-        defs2.add("2. shaman");
-        nodes.add(new WordNode("maskihkîwiyiniw", defs2, 600, 700, 0, 0.4f));
+        Word healer = new Word("maskihkîwiyiniw", "1. medicine man, herbalist\n2. shaman");
+        nodes.add(new WordNode(healer, 600, 700, 0, 0.4f));
 
-        List<String> defs3 = new ArrayList<>();
-        defs3.add("1. medicine");
-        defs3.add("2. herb, plant");
-        defs3.add("3. medicinal root");
-        nodes.add(new WordNode("maskihkiy", defs3, 1400, 1000, 0, 0.2f));
+        Word medicine = new Word("maskihkiy", "1. medicine\n2. herb, plant\n3. medicinal root");
+        medicine.setCreePhrase1(getContext().getString(R.string.maskihkiy_cree_phrase1));
+        medicine.setEnglishPhrase1(getContext().getString(R.string.maskihkiy_english_phrase1));
+        medicine.setCreePhrase2(getContext().getString(R.string.maskihkiy_cree_phrase2));
+        medicine.setEnglishPhrase2(getContext().getString(R.string.maskihkiy_english_phrase2));
+        nodes.add(new WordNode(medicine, 1400, 1000, 0, 0.2f));
 
-        List<String> defs4 = new ArrayList<>();
-        defs4.add("1. tea, herbal tea, infused tea");
-        defs4.add("2. liquid medicine");
-        nodes.add(new WordNode("maskihkîwâpoy", defs4, 1100, 1450, 0, 0.5f));
+        Word tea = new Word("maskihkîwâpoy", "1. tea, herbal tea, infused tea\n2. liquid medicine");
+        tea.setCreePhrase1("niyâlan maskihkîwâpoy.");
+        tea.setEnglishPhrase1("Five herbal teas.");
+        nodes.add(new WordNode(tea, 1100, 1450, 0, 0.5f));
 
-        List<String> defs5 = new ArrayList<>();
-        defs5.add("1. bag, sack");
-        defs5.add("2. luggage");
-        defs5.add("3. medicine bag");
-        nodes.add(new WordNode("maskimot", defs5, 400, 1700, 0, 0.9f));
+        Word bag = new Word("maskimot", "1. bag, sack\n2. luggage\n3. medicine bag");
+        nodes.add(new WordNode(bag, 400, 1700, 0, 0.9f));
+        bag.setCreePhrase1(getContext().getString(R.string.maskimot_cree_phrase1));
+        bag.setEnglishPhrase1(getContext().getString(R.string.maskimot_english_phrase1));
+        bag.setCreePhrase2(getContext().getString(R.string.maskimot_cree_phrase2));
+        bag.setEnglishPhrase2(getContext().getString(R.string.maskimot_english_phrase2));
     }
 
     @Override
@@ -178,6 +185,7 @@ public class WordMapView extends View {
 
         if (scaleFactor < 0.4f) {
             float dotRadius = 35 * density;
+            node.lastDrawnRect.set(node.x - dotRadius, node.y - dotRadius, node.x + dotRadius, node.y + dotRadius);
             canvas.drawCircle(node.x, node.y, dotRadius, boxPaint);
 
             Paint dotStroke = new Paint(Paint.ANTI_ALIAS_FLAG);
@@ -194,16 +202,18 @@ public class WordMapView extends View {
         float lineSpacing = 6 * density;
         float cornerRadius = 25 * density;
 
-        boolean showDefinitions = !node.definitions.isEmpty() && node.expanded && scaleFactor > 0.7f;
-        boolean isCenterNode = node.definitions.isEmpty() && node.relatedness == 0.0f;
+        boolean showDefinitions = !node.data.getDefinitions().isEmpty() && node.expanded && scaleFactor > 0.7f;
+        boolean isCenterNode = node.data.getDefinitions().isEmpty() && node.relatedness == 0.0f;
 
         textPaint.setTextSize(titleSize);
-        float maxTextWidth = textPaint.measureText(node.title);
+        float maxTextWidth = textPaint.measureText(node.data.getTitle());
         float totalHeight = titleSize + padding * 2;
+
+        String[] definitions = node.data.getDefinitions().isEmpty() ? new String[0] : node.data.getDefinitions().split("\n");
 
         if (showDefinitions) {
             textPaint.setTextSize(defSize);
-            for (String def : node.definitions) {
+            for (String def : definitions) {
                 maxTextWidth = Math.max(maxTextWidth, textPaint.measureText(def));
                 totalHeight += defSize + lineSpacing;
             }
@@ -212,25 +222,25 @@ public class WordMapView extends View {
         float width = maxTextWidth + padding * 2.5f;
         float height = totalHeight;
 
-        RectF rect = new RectF(node.x - width / 2, node.y - height / 2, node.x + width / 2, node.y + height / 2);
+        node.lastDrawnRect.set(node.x - width / 2, node.y - height / 2, node.x + width / 2, node.y + height / 2);
         
-        canvas.drawRoundRect(rect, cornerRadius, cornerRadius, boxPaint);
+        canvas.drawRoundRect(node.lastDrawnRect, cornerRadius, cornerRadius, boxPaint);
         
         Paint stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         stroke.setStyle(Paint.Style.STROKE);
         stroke.setColor(Color.BLACK);
         stroke.setStrokeWidth(1.5f * density);
-        canvas.drawRoundRect(rect, cornerRadius, cornerRadius, stroke);
+        canvas.drawRoundRect(node.lastDrawnRect, cornerRadius, cornerRadius, stroke);
 
         textPaint.setTextSize(titleSize);
         textPaint.setFakeBoldText(isCenterNode);
         
         if (isCenterNode) {
             textPaint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText(node.title, node.x, node.y - height / 2 + padding + titleSize * 0.8f, textPaint);
+            canvas.drawText(node.data.getTitle(), node.x, node.y - height / 2 + padding + titleSize * 0.8f, textPaint);
         } else {
             textPaint.setTextAlign(Paint.Align.LEFT);
-            canvas.drawText(node.title, node.x - width / 2 + padding, node.y - height / 2 + padding + titleSize * 0.8f, textPaint);
+            canvas.drawText(node.data.getTitle(), node.x - width / 2 + padding, node.y - height / 2 + padding + titleSize * 0.8f, textPaint);
         }
         textPaint.setFakeBoldText(false);
         textPaint.setTextAlign(Paint.Align.LEFT); // Reset for definitions
@@ -238,7 +248,7 @@ public class WordMapView extends View {
         if (showDefinitions) {
             textPaint.setTextSize(defSize);
             float currentY = node.y - height / 2 + padding + titleSize + lineSpacing + defSize * 0.8f;
-            for (String def : node.definitions) {
+            for (String def : definitions) {
                 canvas.drawText(def, node.x - width / 2 + padding, currentY, textPaint);
                 currentY += defSize + lineSpacing;
             }
@@ -269,6 +279,24 @@ public class WordMapView extends View {
             translateY -= distanceY;
             invalidate();
             return true;
+        }
+
+        @Override
+        public boolean onSingleTapConfirmed(MotionEvent e) {
+            if (onNodeClickListener != null) {
+                float mapX = (e.getX() - translateX) / scaleFactor;
+                float mapY = (e.getY() - translateY) / scaleFactor;
+
+                for (WordNode node : nodes) {
+                    if (node.relatedness <= (1.0f - relatednessThreshold)) {
+                        if (node.lastDrawnRect.contains(mapX, mapY)) {
+                            onNodeClickListener.onNodeClick(node.data);
+                            return true;
+                        }
+                    }
+                }
+            }
+            return super.onSingleTapConfirmed(e);
         }
     }
 }
