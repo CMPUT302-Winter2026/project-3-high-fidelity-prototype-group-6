@@ -37,6 +37,9 @@ public class HomeScreen extends AppCompatActivity {
         EditText mainSearchInput = findViewById(R.id.search_input);
         ImageButton searchButton = findViewById(R.id.search_button);
 
+        TextView matchingMinigame = findViewById(R.id.minigame);
+        EditText searchInput = findViewById(R.id.search_input);
+
         // this handles the novice/advanced modes used throughout the app
         SharedPreferences sharedPreferences = getSharedPreferences("mode", MODE_PRIVATE);
         if (sharedPreferences.getString("mode", null) == null) {
@@ -50,6 +53,11 @@ public class HomeScreen extends AppCompatActivity {
 
         categories.setOnClickListener(v -> {
             Intent intent = new Intent(HomeScreen.this, CuratedCategoriesScreen.class);
+            startActivity(intent);
+        });
+
+        matchingMinigame.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeScreen.this, MatchingMinigameScreen.class);
             startActivity(intent);
         });
 
