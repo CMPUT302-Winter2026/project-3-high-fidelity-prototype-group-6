@@ -1,7 +1,10 @@
 package com.example.vocabularyexplorer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
@@ -28,6 +31,23 @@ public class WordMapScreen extends AppCompatActivity {
         ImageButton collapseBtn = findViewById(R.id.collapse_menu);
         ImageButton expandBtn = findViewById(R.id.expand_menu);
         Slider relatednessSlider = findViewById(R.id.relatedness_slider);
+        EditText searchInput = findViewById(R.id.search_input);
+
+        Intent intent = getIntent();
+        String searchString = intent.getStringExtra("search");
+        
+        // Update the center word in the map view
+        if (searchString != null) {
+            wordMapView.setCenterWord(searchString);
+        }
+
+        searchInput.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                wordMapView.setCenterWord(searchInput.getText().toString());
+                return true;
+            }
+            return false;
+        });
 
         // Connect Slider to Map Logic
         relatednessSlider.addOnChangeListener((slider, value, fromUser) -> {

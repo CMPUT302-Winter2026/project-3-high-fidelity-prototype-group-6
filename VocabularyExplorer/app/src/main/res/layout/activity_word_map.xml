@@ -60,6 +60,7 @@
                     android:hint="Search in English or Cree"
                     android:textColorHint="@color/dark_grey"
                     android:inputType="text"
+                    android:imeOptions="actionSearch"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent" />
 

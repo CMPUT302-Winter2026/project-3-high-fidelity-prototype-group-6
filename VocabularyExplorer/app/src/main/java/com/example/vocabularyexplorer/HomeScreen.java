@@ -2,6 +2,8 @@ package com.example.vocabularyexplorer;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -25,15 +27,31 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         ImageButton wordCard = findViewById(R.id.word_of_the_day_card);
+        TextView categories = findViewById(R.id.categories);
+        EditText searchInput = findViewById(R.id.search_input);
+
         wordCard.setOnClickListener(v -> {
             Intent intent = new Intent(HomeScreen.this, WordMapScreen.class);
             startActivity(intent);
         });
 
-        TextView categories = findViewById(R.id.categories);
         categories.setOnClickListener(v -> {
             Intent intent = new Intent(HomeScreen.this, CuratedCategoriesScreen.class);
             startActivity(intent);
         });
+
+        searchInput.setOnEditorActionListener((v, actionId, event) -> {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                performSearch(searchInput.getText().toString());
+                return true;
+            }
+            return false;
+        });
+    }
+
+    private void performSearch(String searchString) {
+        Intent intent = new Intent(HomeScreen.this, WordMapScreen.class);
+        intent.putExtra("search", searchString);
+        startActivity(intent);
     }
 }

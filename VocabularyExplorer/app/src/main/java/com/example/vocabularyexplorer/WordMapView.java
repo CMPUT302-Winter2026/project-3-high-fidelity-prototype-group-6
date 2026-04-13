@@ -64,6 +64,23 @@ public class WordMapView extends View {
         invalidate();
     }
 
+    /**
+     * Updates the center word of the map.
+     * If the word is "Medicine", it restores all associated nodes.
+     * Otherwise, it clears them and only shows the searched word.
+     */
+    public void setCenterWord(String word) {
+        if (word == null || word.isEmpty()) return;
+
+        if (word.equalsIgnoreCase("Medicine")) {
+            loadDefaultData();
+        } else {
+            nodes.clear();
+            nodes.add(new WordNode(word, new ArrayList<>(), 1000, 1000, 0.0f));
+        }
+        invalidate();
+    }
+
     private void init(Context context) {
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         gestureDetector = new GestureDetector(context, new GestureListener());
@@ -85,6 +102,14 @@ public class WordMapView extends View {
         circlePaint.setColor(Color.parseColor("#80C8E6C9"));
         circlePaint.setStyle(Paint.Style.FILL);
 
+        loadDefaultData();
+        
+        translateX = 0; 
+        translateY = 0;
+    }
+
+    private void loadDefaultData() {
+        nodes.clear();
         // Relatedness: 0.0 = core, higher = more specific/less related
         nodes.add(new WordNode("Medicine", new ArrayList<>(), 1000, 1000, 0.0f));
 
@@ -116,9 +141,6 @@ public class WordMapView extends View {
         defs5.add("2. luggage");
         defs5.add("3. medicine bag");
         nodes.add(new WordNode("maskimot", defs5, 400, 1700, 0, 0.9f));
-        
-        translateX = 0; 
-        translateY = 0;
     }
 
     @Override
@@ -173,6 +195,7 @@ public class WordMapView extends View {
         float cornerRadius = 25 * density;
 
         boolean showDefinitions = !node.definitions.isEmpty() && node.expanded && scaleFactor > 0.7f;
+        boolean isCenterNode = node.definitions.isEmpty() && node.relatedness == 0.0f;
 
         textPaint.setTextSize(titleSize);
         float maxTextWidth = textPaint.measureText(node.title);
@@ -200,9 +223,17 @@ public class WordMapView extends View {
         canvas.drawRoundRect(rect, cornerRadius, cornerRadius, stroke);
 
         textPaint.setTextSize(titleSize);
-        textPaint.setFakeBoldText(node.definitions.isEmpty());
-        canvas.drawText(node.title, node.x - width / 2 + padding, node.y - height / 2 + padding + titleSize * 0.8f, textPaint);
+        textPaint.setFakeBoldText(isCenterNode);
+        
+        if (isCenterNode) {
+            textPaint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText(node.title, node.x, node.y - height / 2 + padding + titleSize * 0.8f, textPaint);
+        } else {
+            textPaint.setTextAlign(Paint.Align.LEFT);
+            canvas.drawText(node.title, node.x - width / 2 + padding, node.y - height / 2 + padding + titleSize * 0.8f, textPaint);
+        }
         textPaint.setFakeBoldText(false);
+        textPaint.setTextAlign(Paint.Align.LEFT); // Reset for definitions
 
         if (showDefinitions) {
             textPaint.setTextSize(defSize);
