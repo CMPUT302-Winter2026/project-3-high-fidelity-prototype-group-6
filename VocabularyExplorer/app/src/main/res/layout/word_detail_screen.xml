@@ -155,7 +155,7 @@
                         android:layout_marginTop="15dp"
                         android:background="@color/grey"
                         app:layout_constraintTop_toBottomOf="@id/word_advanced_label"
-                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintStart_toStartOf="@id/word_advanced_label"
                         app:layout_constraintEnd_toEndOf="parent"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

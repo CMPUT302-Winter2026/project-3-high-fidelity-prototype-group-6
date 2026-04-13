@@ -7,39 +7,6 @@
     android:background="@drawable/rounded_top_corners">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="25dp">
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/mode_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="13dp"
-            android:scaleX="1.3"
-            android:scaleY="1.3"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:thumbTint="@drawable/thumb_track"
-            app:trackTint="@drawable/switch_track" />
-
-        <TextView
-            android:id="@+id/mode_text"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="21dp"
-            android:text="Novice Mode"
-            android:textSize="16sp"
-            android:textColor="@color/black"
-            android:fontFamily="@font/inter"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/mode_switch"/>
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="15dp">
@@ -65,11 +32,11 @@
 
         <ImageView
             android:id="@+id/book"
-            android:layout_width="25dp"
-            android:layout_height="25dp"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
             android:elevation="5dp"
             android:layout_marginStart="15dp"
-            android:src="@drawable/book"
+            android:src="@drawable/share"
             app:layout_constraintTop_toTopOf="@id/layout1"
             app:layout_constraintBottom_toBottomOf="@id/layout1"
             app:layout_constraintStart_toStartOf="@id/layout1"/>
@@ -79,7 +46,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="21dp"
             android:elevation="5dp"
-            android:text="Word Categories"
+            android:text="Share Word Cloud"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:fontFamily="@font/inter"
@@ -119,7 +86,7 @@
             android:layout_height="32dp"
             android:elevation="5dp"
             android:layout_marginStart="15dp"
-            android:src="@drawable/minigame"
+            android:src="@drawable/download"
             app:layout_constraintTop_toTopOf="@id/layout2"
             app:layout_constraintBottom_toBottomOf="@id/layout2"
             app:layout_constraintStart_toStartOf="@id/layout2"/>
@@ -129,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:elevation="5dp"
-            android:text="Matching Minigame"
+            android:text="Download Image"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:fontFamily="@font/inter"
@@ -169,7 +136,7 @@
             android:layout_height="32dp"
             android:elevation="5dp"
             android:layout_marginStart="15dp"
-            android:src="@drawable/semantic_gaps"
+            android:src="@drawable/download_cloud"
             app:layout_constraintTop_toTopOf="@id/layout3"
             app:layout_constraintBottom_toBottomOf="@id/layout3"
             app:layout_constraintStart_toStartOf="@id/layout3"/>
@@ -179,7 +146,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="15dp"
             android:elevation="5dp"
-            android:text="Semantic Gaps"
+            android:text="Download CSV"
             android:textSize="16sp"
             android:textColor="@color/black"
             android:fontFamily="@font/inter"

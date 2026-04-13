@@ -9,9 +9,11 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
 
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 import com.google.android.material.slider.Slider;
 
 public class WordMapScreen extends AppCompatActivity {
@@ -65,6 +67,8 @@ public class WordMapScreen extends AppCompatActivity {
         btnZoomIn.setOnClickListener(v -> wordMapView.zoomIn());
         btnZoomOut.setOnClickListener(v -> wordMapView.zoomOut());
 
+        threeDotMenu.setOnClickListener(v -> showPopoutMenu());
+
         searchInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 wordMapView.setCenterWord(searchInput.getText().toString());
@@ -98,5 +102,16 @@ public class WordMapScreen extends AppCompatActivity {
         });
 
         findViewById(R.id.back_button).setOnClickListener(v -> finish());
+    }
+
+    private void showPopoutMenu() {
+        BottomSheetDialog bottomSheetDialog = new BottomSheetDialog(this);
+        View sheetView = getLayoutInflater().inflate(R.layout.word_map_popout_menu, null);
+        bottomSheetDialog.setContentView(sheetView);
+
+        ConstraintLayout closeButton = sheetView.findViewById(R.id.close);
+        closeButton.setOnClickListener(v -> bottomSheetDialog.dismiss());
+
+        bottomSheetDialog.show();
     }
 }
