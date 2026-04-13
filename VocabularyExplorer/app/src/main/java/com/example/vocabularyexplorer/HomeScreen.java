@@ -28,6 +28,7 @@ public class HomeScreen extends AppCompatActivity {
 
         ImageButton wordCard = findViewById(R.id.word_of_the_day_card);
         TextView categories = findViewById(R.id.categories);
+        TextView matchingMinigame = findViewById(R.id.minigame);
         EditText searchInput = findViewById(R.id.search_input);
 
         wordCard.setOnClickListener(v -> {
@@ -37,6 +38,11 @@ public class HomeScreen extends AppCompatActivity {
 
         categories.setOnClickListener(v -> {
             Intent intent = new Intent(HomeScreen.this, CuratedCategoriesScreen.class);
+            startActivity(intent);
+        });
+
+        matchingMinigame.setOnClickListener(v -> {
+            Intent intent = new Intent(HomeScreen.this, MatchingMinigameScreen.class);
             startActivity(intent);
         });
 
