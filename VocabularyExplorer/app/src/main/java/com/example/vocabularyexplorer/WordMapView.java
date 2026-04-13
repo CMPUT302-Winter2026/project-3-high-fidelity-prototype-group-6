@@ -31,6 +31,7 @@ public class WordMapView extends View {
     private Paint circlePaint;
 
     private OnNodeClickListener onNodeClickListener;
+    private OnMapChangeListener onMapChangeListener;
 
     private static final float CIRCLE_RADIUS = 650f;
 
@@ -40,6 +41,14 @@ public class WordMapView extends View {
 
     public void setOnNodeClickListener(OnNodeClickListener listener) {
         this.onNodeClickListener = listener;
+    }
+
+    public interface OnMapChangeListener {
+        void onMapChanged(int visibleNodeCount);
+    }
+
+    public void setOnMapChangeListener(OnMapChangeListener listener) {
+        this.onMapChangeListener = listener;
     }
 
     public static class WordNode {
@@ -71,6 +80,36 @@ public class WordMapView extends View {
     public void setRelatednessThreshold(float threshold) {
         this.relatednessThreshold = threshold;
         invalidate();
+        notifyMapChanged();
+    }
+
+    void notifyMapChanged() {
+        if (onMapChangeListener != null) {
+            int visibleCount = 0;
+            for (WordNode node : nodes) {
+                if (node.relatedness <= (1.0f - relatednessThreshold)) {
+                    visibleCount++;
+                }
+            }
+            onMapChangeListener.onMapChanged(visibleCount);
+        }
+    }
+
+    public void zoomIn() {
+        scaleFactor = Math.min(scaleFactor * 1.2f, 5.0f);
+        invalidate();
+    }
+
+    public void zoomOut() {
+        scaleFactor = Math.max(scaleFactor / 1.2f, 0.1f);
+        invalidate();
+    }
+
+    public void returnToCenter() {
+        scaleFactor = 1.0f;
+        translateX = getWidth() / 2f - 1000f;
+        translateY = getHeight() / 2f - 1000f;
+        invalidate();
     }
 
     /**
@@ -82,19 +121,20 @@ public class WordMapView extends View {
         if (word == null || word.isEmpty()) return;
 
         if (word.equalsIgnoreCase("Medicine")) {
-            loadDefaultData();
+            loadDefaultData(getContext());
         } else {
             nodes.clear();
             nodes.add(new WordNode(new Word(word, ""), 1000, 1000, 0.0f));
         }
         invalidate();
+        notifyMapChanged();
     }
 
     private void init(Context context) {
         scaleDetector = new ScaleGestureDetector(context, new ScaleListener());
         gestureDetector = new GestureDetector(context, new GestureListener());
 
-        float density = getContext().getResources().getDisplayMetrics().density;
+        float density = context.getResources().getDisplayMetrics().density;
 
         boxPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         boxPaint.setColor(Color.parseColor("#EEEEEE"));
@@ -111,13 +151,13 @@ public class WordMapView extends View {
         circlePaint.setColor(Color.parseColor("#80C8E6C9"));
         circlePaint.setStyle(Paint.Style.FILL);
 
-        loadDefaultData();
+        loadDefaultData(context);
         
         translateX = 0; 
         translateY = 0;
     }
 
-    private void loadDefaultData() {
+    private void loadDefaultData(Context context) {
         nodes.clear();
         // Relatedness: 0.0 = core, higher = more specific/less related
         nodes.add(new WordNode(new Word("Medicine", ""), 1000, 1000, 0.0f));
@@ -131,10 +171,15 @@ public class WordMapView extends View {
         nodes.add(new WordNode(healer, 600, 700, 0, 0.4f));
 
         Word medicine = new Word("maskihkiy", "1. medicine\n2. herb, plant\n3. medicinal root");
-        medicine.setCreePhrase1(getContext().getString(R.string.maskihkiy_cree_phrase1));
-        medicine.setEnglishPhrase1(getContext().getString(R.string.maskihkiy_english_phrase1));
-        medicine.setCreePhrase2(getContext().getString(R.string.maskihkiy_cree_phrase2));
-        medicine.setEnglishPhrase2(getContext().getString(R.string.maskihkiy_english_phrase2));
+        medicine.setSyllabics("ᒪᐢᑭᐦᑭᐩ");
+        medicine.setAdvancedLabel("NI-2");
+        medicine.setIPATranscription("/ˈmʌs.kɪh.kiː/");
+        medicine.setCreePhrase1(context.getString(R.string.maskihkiy_cree_phrase1));
+        medicine.setEnglishPhrase1(context.getString(R.string.maskihkiy_english_phrase1));
+        medicine.setCreePhrase2(context.getString(R.string.maskihkiy_cree_phrase2));
+        medicine.setEnglishPhrase2(context.getString(R.string.maskihkiy_english_phrase2));
+        medicine.setMorphologyImage(R.drawable.maskihkiy_word_parts);
+        medicine.setMorphology(context.getString(R.string.maskihkiy_morphology));
         nodes.add(new WordNode(medicine, 1400, 1000, 0, 0.2f));
 
         Word tea = new Word("maskihkîwâpoy", "1. tea, herbal tea, infused tea\n2. liquid medicine");
@@ -143,11 +188,16 @@ public class WordMapView extends View {
         nodes.add(new WordNode(tea, 1100, 1450, 0, 0.5f));
 
         Word bag = new Word("maskimot", "1. bag, sack\n2. luggage\n3. medicine bag");
+        bag.setSyllabics("ᒪᐢᑭᒧᐟ");
+        bag.setAdvancedLabel("NI-1");
+        bag.setIPATranscription("/ˈmʌs.kɪ.mʊt/");
+        bag.setCreePhrase1(context.getString(R.string.maskimot_cree_phrase1));
+        bag.setEnglishPhrase1(context.getString(R.string.maskimot_english_phrase1));
+        bag.setCreePhrase2(context.getString(R.string.maskimot_cree_phrase2));
+        bag.setEnglishPhrase2(context.getString(R.string.maskimot_english_phrase2));
+        bag.setMorphologyImage(R.drawable.maskimot_word_parts);
+        bag.setMorphology(context.getString(R.string.maskimot_morphology));
         nodes.add(new WordNode(bag, 400, 1700, 0, 0.9f));
-        bag.setCreePhrase1(getContext().getString(R.string.maskimot_cree_phrase1));
-        bag.setEnglishPhrase1(getContext().getString(R.string.maskimot_english_phrase1));
-        bag.setCreePhrase2(getContext().getString(R.string.maskimot_cree_phrase2));
-        bag.setEnglishPhrase2(getContext().getString(R.string.maskimot_english_phrase2));
     }
 
     @Override
@@ -297,6 +347,14 @@ public class WordMapView extends View {
                 }
             }
             return super.onSingleTapConfirmed(e);
+        }
+    }
+
+    @Override
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+        super.onLayout(changed, left, top, right, bottom);
+        if (changed) {
+            returnToCenter();
         }
     }
 }

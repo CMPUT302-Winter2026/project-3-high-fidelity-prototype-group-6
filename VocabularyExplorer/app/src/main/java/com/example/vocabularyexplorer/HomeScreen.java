@@ -38,7 +38,6 @@ public class HomeScreen extends AppCompatActivity {
         ImageButton searchButton = findViewById(R.id.search_button);
 
         TextView matchingMinigame = findViewById(R.id.minigame);
-        EditText searchInput = findViewById(R.id.search_input);
 
         // this handles the novice/advanced modes used throughout the app
         SharedPreferences sharedPreferences = getSharedPreferences("mode", MODE_PRIVATE);
@@ -64,7 +63,6 @@ public class HomeScreen extends AppCompatActivity {
         mainSearchInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                 String searchText = mainSearchInput.getText().toString();
-                closeKeyboard();
                 performSearch(searchText);
                 return true;
             }
@@ -96,6 +94,7 @@ public class HomeScreen extends AppCompatActivity {
 
     private void performSearch(String searchString) {
         if (searchString == null || searchString.trim().isEmpty()) return;
+        closeKeyboard();
         Intent intent = new Intent(HomeScreen.this, WordMapScreen.class);
         intent.putExtra("search", searchString);
         startActivity(intent);

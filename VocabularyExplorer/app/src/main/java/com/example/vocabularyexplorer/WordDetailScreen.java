@@ -59,7 +59,6 @@ public class WordDetailScreen extends AppCompatActivity {
 
         modeSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
             String mode = isChecked ? "advanced" : "novice";
-            Toast.makeText(WordDetailScreen.this, (isChecked ? "Advanced" : "Novice") + " Mode enabled", Toast.LENGTH_SHORT).show();
             sharedPreferences.edit().putString("mode", mode).apply();
             switchModes(mode);
         });
@@ -93,16 +92,17 @@ public class WordDetailScreen extends AppCompatActivity {
             modeSwitch.setChecked(false);
             modeText.setText("Novice Mode");
             wordSyllabics.setVisibility(GONE);
-            wordNoviceLabel.setVisibility(GONE);
+            wordNoviceLabel.setVisibility(VISIBLE);
             wordAdvancedLabel.setVisibility(GONE);
             wordIPATranscription.setVisibility(GONE);
             morphologyLayout.setVisibility(GONE);
             originLayout.setVisibility(GONE);
-        } else if (Objects.equals(mode, "advanced")) {
+        }
+        else if (Objects.equals(mode, "advanced")) {
             modeSwitch.setChecked(true);
             modeText.setText("Advanced Mode");
             wordSyllabics.setVisibility(VISIBLE);
-            wordNoviceLabel.setVisibility(VISIBLE);
+            wordNoviceLabel.setVisibility(GONE);
             wordAdvancedLabel.setVisibility(VISIBLE);
             wordIPATranscription.setVisibility(VISIBLE);
             morphologyLayout.setVisibility(VISIBLE);
@@ -116,22 +116,27 @@ public class WordDetailScreen extends AppCompatActivity {
             wordTitle.setText(word.getTitle());
             wordDefinitions.setText(word.getDefinitions());
             
-            // Handle phrases visibility
-            if (word.getCreePhrase1() != null) {
-                wordCreePhrase1.setText(android.text.Html.fromHtml(word.getCreePhrase1(), android.text.Html.FROM_HTML_MODE_LEGACY));
-                wordCreePhrase1.setVisibility(VISIBLE);
-            } else {
-                wordCreePhrase1.setVisibility(GONE);
-            }
+            // Phrases
+            updatePhrase(wordCreePhrase1, word.getCreePhrase1());
+            updatePhrase(wordEnglishPhrase1, word.getEnglishPhrase1());
+            updatePhrase(wordCreePhrase2, word.getCreePhrase2());
+            updatePhrase(wordEnglishPhrase2, word.getEnglishPhrase2());
 
-            if (word.getEnglishPhrase1() != null) {
-                wordCreePhrase1.setText(android.text.Html.fromHtml(word.getCreePhrase1(), android.text.Html.FROM_HTML_MODE_LEGACY));
-                wordEnglishPhrase1.setVisibility(VISIBLE);
-            } else {
-                wordEnglishPhrase1.setVisibility(GONE);
-            }
+            // Advanced Fields
+            if (word.getSyllabics() != null) wordSyllabics.setText(word.getSyllabics());
+            if (word.getAdvancedLabel() != null) wordAdvancedLabel.setText(word.getAdvancedLabel());
+            if (word.getIPATranscription() != null) wordIPATranscription.setText(word.getIPATranscription());
+            if (word.getMorphology() != null) wordMorphology.setText(android.text.Html.fromHtml(word.getMorphology(), android.text.Html.FROM_HTML_MODE_LEGACY));
+            if (word.getMorphologyImage() != 0) wordParts.setImageResource(word.getMorphologyImage());
+        }
+    }
 
-            // You can add logic for Phrase 2 similarly...
+    private void updatePhrase(TextView view, String text) {
+        if (text != null && !text.isEmpty()) {
+            view.setText(android.text.Html.fromHtml(text, android.text.Html.FROM_HTML_MODE_LEGACY));
+            view.setVisibility(VISIBLE);
+        } else {
+            view.setVisibility(GONE);
         }
     }
 }

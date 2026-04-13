@@ -10,6 +10,12 @@ public class Word implements Serializable {
     private String creePhrase2;
     private String englishPhrase2;
 
+    private String syllabics;
+    private String advancedLabel;
+    private String IPATranscription;
+    private int morphologyImage;
+    private String morphology;
+
     public Word (String title, String definitions) {
         this.title = title;
         this.definitions = definitions;
@@ -17,6 +23,12 @@ public class Word implements Serializable {
         this.englishPhrase1 = null;
         this.creePhrase2 = null;
         this.englishPhrase2 = null;
+
+        this.syllabics = null;
+        this.advancedLabel = null;
+        this.IPATranscription = null;
+        this.morphologyImage = 0;
+        this.morphology = null;
     }
 
     public String getTitle() {
@@ -58,4 +70,45 @@ public class Word implements Serializable {
     public void setEnglishPhrase2(String englishPhrase2) {
         this.englishPhrase2 = englishPhrase2;
     }
+
+    public String getSyllabics() {
+        return syllabics;
+    }
+
+    public void setSyllabics(String syllabics) {
+        this.syllabics = syllabics;
+    }
+
+    public String getAdvancedLabel() {
+        return advancedLabel;
+    }
+
+    public void setAdvancedLabel(String advancedLabel) {
+        this.advancedLabel = advancedLabel;
+    }
+
+    public String getIPATranscription() {
+        return IPATranscription;
+    }
+
+    public void setIPATranscription(String IPATranscription) {
+        this.IPATranscription = IPATranscription;
+    }
+
+    public int getMorphologyImage() {
+        return morphologyImage;
+    }
+
+    public void setMorphologyImage(int morphologyImage) {
+        this.morphologyImage = morphologyImage;
+    }
+
+    public String getMorphology() {
+        return morphology;
+    }
+
+    public void setMorphology(String morphology) {
+        this.morphology = morphology;
+    }
+
 }

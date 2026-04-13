@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.WindowCompat;
 import androidx.core.view.WindowInsetsControllerCompat;
@@ -27,11 +29,15 @@ public class WordMapScreen extends AppCompatActivity {
         View topMenuContainer = findViewById(R.id.container);
         View searchBar = findViewById(R.id.search_bar);
         View threeDotMenu = findViewById(R.id.three_dot_menu);
-        View wordCount = findViewById(R.id.word_count);
+        TextView wordCountText = findViewById(R.id.word_count);
         ImageButton collapseBtn = findViewById(R.id.collapse_menu);
         ImageButton expandBtn = findViewById(R.id.expand_menu);
         Slider relatednessSlider = findViewById(R.id.relatedness_slider);
         EditText searchInput = findViewById(R.id.search_input);
+
+        ImageButton btnReturnToCenter = findViewById(R.id.return_to_center);
+        ImageButton btnZoomIn = findViewById(R.id.zoom_in);
+        ImageButton btnZoomOut = findViewById(R.id.zoom_out);
 
         Intent intent = getIntent();
         String searchString = intent.getStringExtra("search");
@@ -40,12 +46,24 @@ public class WordMapScreen extends AppCompatActivity {
             wordMapView.setCenterWord(searchString);
         }
 
-        // Handle clicks on map nodes
+        // Map Listeners
         wordMapView.setOnNodeClickListener(word -> {
             Intent detailIntent = new Intent(WordMapScreen.this, WordDetailScreen.class);
             detailIntent.putExtra("word_data", word);
             startActivity(detailIntent);
         });
+
+        wordMapView.setOnMapChangeListener(visibleNodeCount -> {
+            wordCountText.setText("Word Count: " + visibleNodeCount);
+        });
+        
+        // Initial count update
+        wordMapView.notifyMapChanged();
+
+        // Control Listeners
+        btnReturnToCenter.setOnClickListener(v -> wordMapView.returnToCenter());
+        btnZoomIn.setOnClickListener(v -> wordMapView.zoomIn());
+        btnZoomOut.setOnClickListener(v -> wordMapView.zoomOut());
 
         searchInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
@@ -63,7 +81,7 @@ public class WordMapScreen extends AppCompatActivity {
             topMenuContainer.setVisibility(View.GONE);
             searchBar.setVisibility(View.GONE);
             threeDotMenu.setVisibility(View.GONE);
-            wordCount.setVisibility(View.GONE);
+            wordCountText.setVisibility(View.GONE);
             collapseBtn.setVisibility(View.GONE);
             expandBtn.setVisibility(View.VISIBLE);
             isMenuCollapsed = true;
@@ -73,7 +91,7 @@ public class WordMapScreen extends AppCompatActivity {
             topMenuContainer.setVisibility(View.VISIBLE);
             searchBar.setVisibility(View.VISIBLE);
             threeDotMenu.setVisibility(View.VISIBLE);
-            wordCount.setVisibility(View.VISIBLE);
+            wordCountText.setVisibility(View.VISIBLE);
             collapseBtn.setVisibility(View.VISIBLE);
             expandBtn.setVisibility(View.GONE);
             isMenuCollapsed = false;
