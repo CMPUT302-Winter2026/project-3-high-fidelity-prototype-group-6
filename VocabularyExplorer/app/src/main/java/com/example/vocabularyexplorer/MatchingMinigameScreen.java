@@ -45,8 +45,8 @@ public class MatchingMinigameScreen extends AppCompatActivity {
     }
 
     private final List<Round> rounds = new ArrayList<>(Arrays.asList(
-            new Round("pawâcakinâsis-pîsim",
-                    new String[]{"mikisiwi-pîsim", "pîsim", "kôna", "sîkwan", "masinahikan"})
+            new Round("wâkâs",
+                    new String[]{"wâkisiw", "pîhtonêw", "kâ-osâwisicik", "mîtosihk", "têhtapiwin"})
     ));
 
     private int currentRound = 0;
