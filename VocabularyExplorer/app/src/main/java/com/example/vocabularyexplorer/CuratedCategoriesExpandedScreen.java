@@ -223,6 +223,33 @@ public class CuratedCategoriesExpandedScreen extends AppCompatActivity {
             components2.add(new PhraseComponent("it is", Color.parseColor("#C8E6C9"), false));
             components2.add(new PhraseComponent("red", Color.parseColor("#FFCDD2"), false));
             phraseList.add(new Phrase(components2));
+
+            ArrayList<PhraseComponent> components4 = new ArrayList<>();
+            components4.add(new PhraseComponent("watôk", Color.parseColor("#B9D992")));
+            components4.add(new PhraseComponent("nâkwan", Color.parseColor("#A686E6")));
+            components4.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            components4.add(new PhraseComponent("It is", Color.parseColor("#A686E6")));
+            components4.add(new PhraseComponent("burgundy", Color.parseColor("#B9D992")));
+            components4.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            phraseList.add(new Phrase(components4));
+
+            ArrayList<PhraseComponent> components5 = new ArrayList<>();
+            components5.add(new PhraseComponent("wâp", Color.parseColor("#B9D992")));
+            components5.add(new PhraseComponent("âwahk", Color.parseColor("#A686E6")));
+            components5.add(new PhraseComponent("â", Color.parseColor("#E9B972")));
+            components5.add(new PhraseComponent("It is", Color.parseColor("#E9B972")));
+            components5.add(new PhraseComponent("white", Color.parseColor("#B9D992")));
+            components5.add(new PhraseComponent("sand", Color.parseColor("#A686E6")));
+            phraseList.add(new Phrase(components5));
+
+            ArrayList<PhraseComponent> components6 = new ArrayList<>();
+            components6.add(new PhraseComponent("sîpihkw", Color.parseColor("#B9D992")));
+            components6.add(new PhraseComponent("isi", Color.parseColor("#A686E6")));
+            components6.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            components6.add(new PhraseComponent("S/he is", Color.parseColor("#A686E6")));
+            components6.add(new PhraseComponent("blue", Color.parseColor("#B9D992")));
+            components6.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            phraseList.add(new Phrase(components6));
         }
     }
 }
