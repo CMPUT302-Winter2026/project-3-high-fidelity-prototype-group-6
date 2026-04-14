@@ -26,4 +26,21 @@
     <string name="apisimosos_cree_phrase1">&lt;u&gt;wâwâskêsiwayân&lt;/u&gt;</string>
     <string name="apisimosos_english_phrase1">&lt;i&gt;Elksin&lt;/i&gt;</string>
 
+    <string name="itasinason_cree_phrase1">&lt;u&gt;itasinâstêham&lt;/u&gt;</string>
+    <string name="itasinason_english_phrase1">&lt;i&gt;s/he colours&lt;/i&gt;</string>
+
+    <string name="mihko_cree_phrase1">&lt;u&gt;mihkokwaniy&lt;/u&gt;</string>
+    <string name="mihko_english_phrase1">&lt;i&gt;rose, red flower&lt;/i&gt;</string>
+
+    <string name="sipihko_cree_phrase1">&lt;u&gt;sîpihko-papakiwayân&lt;/u&gt;</string>
+    <string name="sipihko_english_phrase1">&lt;i&gt;blue shirt&lt;/i&gt;</string>
+
+    <string name="askihtako_cree_phrase1">&lt;u&gt;askihtako-kîsowahpison&lt;/u&gt;</string>
+    <string name="askihtako_english_phrase1">&lt;i&gt;green scarf&lt;/i&gt;</string>
+
+    <string name="osawi_cree_phrase1">&lt;u&gt;osâwi-maskwa&lt;/u&gt;</string>
+    <string name="osawi_english_phrase1">&lt;i&gt;brown bear&lt;/i&gt;</string>
+
+    <string name="osawas_cree_phrase1">&lt;u&gt;osâwâsâpoy&lt;/u&gt;</string>
+    <string name="osawas_english_phrase1">&lt;i&gt;orange juice&lt;/i&gt;</string>
 </resources>

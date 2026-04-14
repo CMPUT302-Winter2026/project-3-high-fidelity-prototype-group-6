@@ -203,12 +203,36 @@ public class CuratedCategoriesExpandedScreen extends AppCompatActivity {
         phraseList.clear();
 
         if (category != null && category.equalsIgnoreCase("colour")) {
-            wordList.add(new Word("itasinâson", "1. colour"));
-            wordList.add(new Word("mihko-", "1. red"));
-            wordList.add(new Word("sîpihko-", "1. blue"));
-            wordList.add(new Word("askihtako-", "1. blue\n2. blue, blue-green"));
-            wordList.add(new Word("osâwi-", "1. yellow, orange, brown"));
-            wordList.add(new Word("osâwâs", "1. orange"));
+            Word newWord;
+            newWord = new Word("itasinâson", "1. colour");
+            newWord.setCreePhrase1(getString(R.string.itasinason_cree_phrase1));
+            newWord.setEnglishPhrase1(getString(R.string.itasinason_english_phrase1));
+            wordList.add(newWord);
+
+            newWord = new Word("mihko-", "1. red");
+            newWord.setCreePhrase1(getString(R.string.mihko_cree_phrase1));
+            newWord.setEnglishPhrase1(getString(R.string.mihko_english_phrase1));
+            wordList.add(newWord);
+
+            newWord = new Word("sîpihko-", "1. blue");
+            newWord.setCreePhrase1(getString(R.string.sipihko_cree_phrase1));
+            newWord.setEnglishPhrase1(getString(R.string.sipihko_english_phrase1));
+            wordList.add(newWord);
+
+            newWord = new Word("askihtako-", "1. blue\n2. blue, blue-green");
+            newWord.setCreePhrase1(getString(R.string.askihtako_cree_phrase1));
+            newWord.setEnglishPhrase1(getString(R.string.askihtako_english_phrase1));
+            wordList.add(newWord);
+
+            newWord = new Word("osâwi-", "1. yellow, orange, brown");
+            newWord.setCreePhrase1(getString(R.string.osawi_cree_phrase1));
+            newWord.setEnglishPhrase1(getString(R.string.osawi_english_phrase1));
+            wordList.add(newWord);
+
+            newWord = new Word("osâwâs", "1. orange");
+            newWord.setCreePhrase1(getString(R.string.osawas_cree_phrase1));
+            newWord.setEnglishPhrase1(getString(R.string.osawas_english_phrase1));
+            wordList.add(newWord);
 
             ArrayList<PhraseComponent> components1 = new ArrayList<>();
             components1.add(new PhraseComponent("kaskitêw", Color.parseColor("#B9D992"), true));
