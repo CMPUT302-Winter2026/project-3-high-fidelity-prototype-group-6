@@ -36,7 +36,9 @@ public class CuratedCategoriesWordsAdapter extends RecyclerView.Adapter<CuratedC
         holder.wordTitle.setText(word.getTitle());
         holder.wordDefinitions.setText(word.getDefinitions());
         holder.wordLayout.setOnClickListener(v -> {
-
+            Intent detailIntent = new Intent(context, WordDetailScreen.class);
+            detailIntent.putExtra("word_data", word);
+            context.startActivity(detailIntent);
         });
     }
 

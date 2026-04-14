@@ -38,6 +38,7 @@ public class CuratedCategoriesAdapter extends RecyclerView.Adapter<CuratedCatego
         holder.categoryImage.setImageResource(category.getImage());
         holder.categoryLayout.setOnClickListener(v -> {
             Intent intent = new Intent(context, CuratedCategoriesWordsScreen.class);
+            intent.putExtra("category", category.getTitle());
             context.startActivity(intent);
         });
     }
