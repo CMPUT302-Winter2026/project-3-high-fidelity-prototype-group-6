@@ -2,16 +2,28 @@
     <string name="app_name">VocabularyExplorer</string>
 
     // App data
-    <string name="maskihkiy_cree_phrase1"><u>maskihkîhkêw</u></string>
-    <string name="maskihkiy_english_phrase1"><i>s/he prepares medicine</i></string>
-    <string name="maskihkiy_cree_phrase2"><u>maskihkîwakan</u></string>
-    <string name="maskihkiy_english_phrase2"><i>it smells like medicine</i></string>
-    <string name="maskihkiy_morphology"><b>mask</b> is the root, associated with concepts like “strength”, “hardness”, or “power”.</string>
+    <string name="maskihkiy_cree_phrase1">&lt;u&gt;maskihkîhkêw&lt;/u&gt;</string>
+    <string name="maskihkiy_english_phrase1">&lt;i&gt;s/he prepares medicine&lt;/i&gt;</string>
+    <string name="maskihkiy_cree_phrase2">&lt;u&gt;maskihkîwakan&lt;/u&gt;</string>
+    <string name="maskihkiy_english_phrase2">&lt;i&gt;it smells like medicine&lt;/i&gt;</string>
+    <string name="maskihkiy_morphology">&lt;b&gt;mask&lt;/b&gt; is the root, associated with concepts like “strength”, “hardness”, or “power”.</string>
 
-    <string name="maskimot_cree_phrase1"><u>maskimotihkêw</u></string>
-    <string name="maskimot_english_phrase1"><i>s/he makes bags</i></string>
-    <string name="maskimot_cree_phrase2"><u>maskimotihkâkêw</u></string>
-    <string name="maskimot_english_phrase2"><i>s/he makes a bag from something</i></string>
-    <string name="maskimot_morphology"><b>mask</b> is the root, associated with concepts like “strength”, “hardness”, or “power”.</string>
+    <string name="maskimot_cree_phrase1">&lt;u&gt;maskimotihkêw&lt;/u&gt;</string>
+    <string name="maskimot_english_phrase1">&lt;i&gt;s/he makes bags&lt;/i&gt;</string>
+    <string name="maskimot_cree_phrase2">&lt;u&gt;maskimotihkâkêw&lt;/u&gt;</string>
+    <string name="maskimot_english_phrase2">&lt;i&gt;s/he makes a bag from something&lt;/i&gt;</string>
+    <string name="maskimot_morphology">&lt;b&gt;mask&lt;/b&gt; is the root, associated with concepts like “strength”, “hardness”, or “power”.</string>
+
+    <string name="pisim_cree_phrase1">&lt;u&gt;pawâcakinâsis-pîsim&lt;/u&gt;</string>
+    <string name="pisim_english_phrase1">&lt;i&gt;Frost-Exploding Trees Moon&lt;/i&gt;</string>
+    <string name="pisim_cree_phrase2">&lt;u&gt;pawâcakinâsis-pîsim&lt;/u&gt;</string>
+    <string name="pisim_english_phrase2">&lt;i&gt;December&lt;/i&gt;</string>
+    <string name="pisim_morphology">&lt;b&gt;mask&lt;/b&gt; is the root, associated with concepts like “strength”, “hardness”, or “power”.</string>
+
+    <string name="wakas_cree_phrase1">&lt;u&gt;wâkisiw&lt;/u&gt;</string>
+    <string name="wakas_english_phrase1">&lt;i&gt;It is a banana&lt;/i&gt;</string>
+
+    <string name="apisimosos_cree_phrase1">&lt;u&gt;wâwâskêsiwayân&lt;/u&gt;</string>
+    <string name="apisimosos_english_phrase1">&lt;i&gt;Elksin&lt;/i&gt;</string>
 
 </resources>

@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -33,7 +34,32 @@ public class SemanticGapsScreen extends AppCompatActivity {
             return insets;
         });
 
+        ImageButton uploadButton = findViewById(R.id.upload_button);
+        uploadButton.setOnClickListener(v -> showAttachDocumentDialog());
+
         setupBottomBar();
+    }
+
+    private void showAttachDocumentDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_attach_document, null);
+        builder.setView(dialogView);
+
+        AlertDialog dialog = builder.create();
+        if (dialog.getWindow() != null) {
+            dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        }
+
+        TextView btnCancel = dialogView.findViewById(R.id.btn_cancel);
+        btnCancel.setOnClickListener(v -> dialog.dismiss());
+
+        ConstraintLayout dropZone = dialogView.findViewById(R.id.drop_zone);
+        dropZone.setOnClickListener(v -> {
+            // Logic to browse files would go here
+            dialog.dismiss();
+        });
+
+        dialog.show();
     }
 
     private void setupBottomBar() {

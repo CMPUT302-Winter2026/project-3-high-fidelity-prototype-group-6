@@ -35,31 +35,32 @@ public class CuratedCategoriesPhrasesAdapter extends RecyclerView.Adapter<Curate
         Phrase phrase = phraseList.get(position);
         ArrayList<PhraseComponent> components = phrase.getComponents();
 
-        // Arrays to manage the views easily
         TextView[] titleViews = {holder.wordTitle, holder.wordTitle2, holder.wordTitle3};
         TextView[] definitionViews = {holder.wordDefinitions, holder.wordDefinitions2, holder.wordDefinitions3};
 
-        // Reset views
-        for (TextView tv : titleViews) {
-            tv.setVisibility(View.GONE);
-            tv.setText("");
-        }
-        for (TextView tv : definitionViews) {
-            tv.setVisibility(View.GONE);
-            tv.setText("");
-        }
+        for (TextView tv : titleViews) tv.setVisibility(View.GONE);
+        for (TextView tv : definitionViews) tv.setVisibility(View.GONE);
 
-        // assume the components are ordered: Cree parts first, then English parts.
-        for (int i = 0; i < components.size(); i++) {
-            PhraseComponent component = components.get(i);
-            if (i < 3) {
-                titleViews[i].setVisibility(View.VISIBLE);
-                titleViews[i].setText(component.getText());
-                titleViews[i].setBackgroundColor(component.getColor());
-            } else if (i < 6) {
-                definitionViews[i - 3].setVisibility(View.VISIBLE);
-                definitionViews[i - 3].setText(component.getText());
-                definitionViews[i - 3].setBackgroundColor(component.getColor());
+        int creeIndex = 0;
+        int englishIndex = 0;
+
+        for (PhraseComponent component : components) {
+            if (component.getText() == null || component.getText().isEmpty()) continue;
+
+            if (component.isCree()) {
+                if (creeIndex < 3) {
+                    titleViews[creeIndex].setVisibility(View.VISIBLE);
+                    titleViews[creeIndex].setText(component.getText());
+                    titleViews[creeIndex].setBackgroundColor(component.getColor());
+                    creeIndex++;
+                }
+            } else {
+                if (englishIndex < 3) {
+                    definitionViews[englishIndex].setVisibility(View.VISIBLE);
+                    definitionViews[englishIndex].setText(component.getText());
+                    definitionViews[englishIndex].setBackgroundColor(component.getColor());
+                    englishIndex++;
+                }
             }
         }
     }

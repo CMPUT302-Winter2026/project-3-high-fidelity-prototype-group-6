@@ -211,21 +211,17 @@ public class CuratedCategoriesExpandedScreen extends AppCompatActivity {
             wordList.add(new Word("osâwâs", "1. orange"));
 
             ArrayList<PhraseComponent> components1 = new ArrayList<>();
-            components1.add(new PhraseComponent("maskihkî", Color.parseColor("#B9D992")));
-            components1.add(new PhraseComponent("w", Color.parseColor("#A686E6")));
-            components1.add(new PhraseComponent("iyiniw", Color.parseColor("#E9B972")));
-            components1.add(new PhraseComponent("someone who", Color.parseColor("#E9B972")));
-            components1.add(new PhraseComponent("treats", Color.parseColor("#A686E6")));
-            components1.add(new PhraseComponent("illness", Color.parseColor("#B9D992")));
+            components1.add(new PhraseComponent("kaskitêw", Color.parseColor("#e91fe9"), true));
+            components1.add(new PhraseComponent("â", Color.parseColor("#29ed28"), true));
+            components1.add(new PhraseComponent("It is", Color.parseColor("#29ed28"), false));
+            components1.add(new PhraseComponent("black", Color.parseColor("#e91fe9"), false));
             phraseList.add(new Phrase(components1));
 
             ArrayList<PhraseComponent> components2 = new ArrayList<>();
-            components2.add(new PhraseComponent("mihko", Color.parseColor("#FFCDD2")));
-            components2.add(new PhraseComponent("siw", Color.parseColor("#C8E6C9")));
-            components2.add(new PhraseComponent("", Color.TRANSPARENT));
-            components2.add(new PhraseComponent("it is", Color.parseColor("#C8E6C9")));
-            components2.add(new PhraseComponent("red", Color.parseColor("#FFCDD2")));
-            components2.add(new PhraseComponent("", Color.TRANSPARENT));
+            components2.add(new PhraseComponent("mihko", Color.parseColor("#FFCDD2"), true));
+            components2.add(new PhraseComponent("siw", Color.parseColor("#C8E6C9"), true));
+            components2.add(new PhraseComponent("it is", Color.parseColor("#C8E6C9"), false));
+            components2.add(new PhraseComponent("red", Color.parseColor("#FFCDD2"), false));
             phraseList.add(new Phrase(components2));
         }
     }

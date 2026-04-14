@@ -6,13 +6,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".HomeScreen"
-    android:fitsSystemWindows="true">
+    android:fitsSystemWindows="true"
+    android:background="@color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/top_bar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="20dp"
         android:paddingBottom="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -145,7 +146,7 @@
                     android:layout_height="match_parent"
                     android:layout_marginStart="12dp"
                     android:background="@null"
-                    android:hint="Search..."
+                    android:hint="Search in English or Cree"
                     android:inputType="text"
                     android:imeOptions="actionSearch"
                     app:layout_constraintStart_toStartOf="parent"

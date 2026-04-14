@@ -87,16 +87,15 @@ public class HomeScreen extends AppCompatActivity {
 
     private Word getWordOfDay() {
         Context context = getBaseContext();
-        Word wordOfDay = new Word("pawâcakinâsis-pîsim", "1. Frost-Exploding Trees Moon\n2. Blizzard Moon\n3. December");
-        wordOfDay.setSyllabics("ᒪᐢᑭᐦᑭᐩ");
-        wordOfDay.setAdvancedLabel("NI-2");
-        wordOfDay.setIPATranscription("/ˈmʌs.kɪh.kiː/");
-        wordOfDay.setCreePhrase1(context.getString(R.string.maskihkiy_cree_phrase1));
-        wordOfDay.setEnglishPhrase1(context.getString(R.string.maskihkiy_english_phrase1));
-        wordOfDay.setCreePhrase2(context.getString(R.string.maskihkiy_cree_phrase2));
-        wordOfDay.setEnglishPhrase2(context.getString(R.string.maskihkiy_english_phrase2));
-        wordOfDay.setMorphologyImage(R.drawable.maskihkiy_word_parts);
-        wordOfDay.setMorphology(context.getString(R.string.maskihkiy_morphology));
+        Word wordOfDay = new Word("pîsim", "1. Sun\n2. Moon\n3. Month");
+        wordOfDay.setSyllabics("ᐲᓯᒼ");
+        wordOfDay.setAdvancedLabel("NI-3");
+        wordOfDay.setIPATranscription("/piːˈsɪm/");
+        wordOfDay.setCreePhrase1(context.getString(R.string.pisim_cree_phrase1));
+        wordOfDay.setEnglishPhrase1(context.getString(R.string.pisim_english_phrase1));
+        wordOfDay.setCreePhrase2(context.getString(R.string.pisim_cree_phrase2));
+        wordOfDay.setEnglishPhrase2(context.getString(R.string.pisim_english_phrase2));
+        wordOfDay.setMorphology(context.getString(R.string.pisim_morphology));
         return wordOfDay;
     }
 

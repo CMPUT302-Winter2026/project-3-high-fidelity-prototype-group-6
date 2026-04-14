@@ -5,11 +5,14 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
+import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.ScaleGestureDetector;
 import android.view.View;
+
+import androidx.appcompat.content.res.AppCompatResources;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,11 +32,12 @@ public class WordMapView extends View {
     private Paint textPaint;
     private Paint linePaint;
     private Paint circlePaint;
+    private Drawable externalLinkIcon;
 
     private OnNodeClickListener onNodeClickListener;
     private OnMapChangeListener onMapChangeListener;
 
-    private static final float CIRCLE_RADIUS = 650f;
+    private static final float CIRCLE_RADIUS = 700f;
 
     public interface OnNodeClickListener {
         void onNodeClick(Word word);
@@ -106,9 +110,18 @@ public class WordMapView extends View {
     }
 
     public void returnToCenter() {
+        centerOnCoordinate(1000, 1000);
+    }
+
+    private void centerOnCoordinate(float x, float y) {
+        if (getWidth() == 0 || getHeight() == 0) {
+            // View not laid out yet, defer centering
+            post(() -> centerOnCoordinate(x, y));
+            return;
+        }
         scaleFactor = 1.0f;
-        translateX = getWidth() / 2f - 1000f;
-        translateY = getHeight() / 2f - 1000f;
+        translateX = getWidth() / 2f - x;
+        translateY = getHeight() / 2f - y;
         invalidate();
     }
 
@@ -136,7 +149,8 @@ public class WordMapView extends View {
             nodes.clear();
             nodes.add(new WordNode(new Word(word, ""), 1000, 1000, 0.0f));
         }
-        invalidate();
+        
+        centerOnCoordinate(1000, 1000);
         notifyMapChanged();
     }
 
@@ -161,9 +175,11 @@ public class WordMapView extends View {
         circlePaint.setColor(Color.parseColor("#80C8E6C9"));
         circlePaint.setStyle(Paint.Style.FILL);
 
+        externalLinkIcon = AppCompatResources.getDrawable(context, R.drawable.external_link);
+
         loadMedicineData(context);
-        
-        translateX = 0; 
+
+        translateX = 0;
         translateY = 0;
     }
 
@@ -175,10 +191,10 @@ public class WordMapView extends View {
         Word nurse = new Word("maskihkîwiskwêw", "1. nurse\n2. woman doctor\n3. medicine woman\n4. a medicine woman or nurse");
         nurse.setCreePhrase1("maskihkîwiskwêw anima.");
         nurse.setEnglishPhrase1("That is a nurse.");
-        nodes.add(new WordNode(nurse, 900, 200, 3, 0.8f));
+        nodes.add(new WordNode(nurse, 900, 150, 3, 0.8f));
 
         Word healer = new Word("maskihkîwiyiniw", "1. medicine man, herbalist\n2. shaman");
-        nodes.add(new WordNode(healer, 600, 700, 0, 0.4f));
+        nodes.add(new WordNode(healer, 650, 700, 0, 0.4f));
 
         Word medicine = new Word("maskihkiy", "1. medicine\n2. herb, plant\n3. medicinal root");
         medicine.setSyllabics("ᒪᐢᑭᐦᑭᐩ");
@@ -232,7 +248,9 @@ public class WordMapView extends View {
         berry.setEnglishPhrase1("That is a nurse.");
         nodes.add(new WordNode(berry, 900, 200, 3, 0.8f));
 
-        Word banana = new Word("banana", "1. banana");
+        Word banana = new Word("wâkâs", "1. banana");
+        banana.setCreePhrase1(context.getString(R.string.wakas_cree_phrase1));
+        banana.setEnglishPhrase1(context.getString(R.string.wakas_english_phrase1));
         nodes.add(new WordNode(banana, 1400, 1000, 0, 0.2f));
 
         Word peels = new Word("pîhtonêw", "1. s/he peels it");
@@ -254,6 +272,8 @@ public class WordMapView extends View {
         nodes.add(new WordNode(hunt, 900, 200, 3, 0.8f));
 
         Word deer = new Word("apisimôsos", "1. deer, red deer\n2. mule deer, jumping deer\n3. A deer");
+        deer.setCreePhrase1(context.getString(R.string.apisimosos_cree_phrase1));
+        deer.setEnglishPhrase1(context.getString(R.string.apisimosos_english_phrase1));
         nodes.add(new WordNode(deer, 1500, 1000, 0, 0.2f));
 
         Word venison = new Word("apisimôsowiyâs", "1. venison, deer meat\n2. one piece of venison");
@@ -314,12 +334,17 @@ public class WordMapView extends View {
         float defSize = 16 * density;
         float lineSpacing = 6 * density;
         float cornerRadius = 25 * density;
+        float iconSize = 18 * density;
+        float iconSpacing = 8 * density;
 
         boolean showDefinitions = !node.data.getDefinitions().isEmpty() && node.expanded && scaleFactor > 0.7f;
         boolean isCenterNode = node.data.getDefinitions().isEmpty() && node.relatedness == 0.0f;
 
         textPaint.setTextSize(titleSize);
-        float maxTextWidth = textPaint.measureText(node.data.getTitle());
+        float titleWidth = textPaint.measureText(node.data.getTitle());
+
+        // Only add icon width/spacing if it's NOT the center node
+        float maxTextWidth = isCenterNode ? titleWidth : (titleWidth + iconSpacing + iconSize);
         float totalHeight = titleSize + padding * 2;
 
         String[] definitions = node.data.getDefinitions().isEmpty() ? new String[0] : node.data.getDefinitions().split("\n");
@@ -336,9 +361,9 @@ public class WordMapView extends View {
         float height = totalHeight;
 
         node.lastDrawnRect.set(node.x - width / 2, node.y - height / 2, node.x + width / 2, node.y + height / 2);
-        
+
         canvas.drawRoundRect(node.lastDrawnRect, cornerRadius, cornerRadius, boxPaint);
-        
+
         Paint stroke = new Paint(Paint.ANTI_ALIAS_FLAG);
         stroke.setStyle(Paint.Style.STROKE);
         stroke.setColor(Color.BLACK);
@@ -347,14 +372,25 @@ public class WordMapView extends View {
 
         textPaint.setTextSize(titleSize);
         textPaint.setFakeBoldText(isCenterNode);
-        
+
+        float titleY = node.y - height / 2 + padding + titleSize * 0.8f;
+
         if (isCenterNode) {
             textPaint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText(node.data.getTitle(), node.x, node.y - height / 2 + padding + titleSize * 0.8f, textPaint);
+            canvas.drawText(node.data.getTitle(), node.x, titleY, textPaint);
         } else {
+            float startX = node.x - width / 2 + padding;
             textPaint.setTextAlign(Paint.Align.LEFT);
-            canvas.drawText(node.data.getTitle(), node.x - width / 2 + padding, node.y - height / 2 + padding + titleSize * 0.8f, textPaint);
+            canvas.drawText(node.data.getTitle(), startX, titleY, textPaint);
+
+            if (externalLinkIcon != null) {
+                float iconLeft = startX + titleWidth + iconSpacing;
+                float iconTop = titleY - iconSize * 0.85f;
+                externalLinkIcon.setBounds((int) iconLeft, (int) iconTop, (int) (iconLeft + iconSize), (int) (iconTop + iconSize));
+                externalLinkIcon.draw(canvas);
+            }
         }
+
         textPaint.setFakeBoldText(false);
         textPaint.setTextAlign(Paint.Align.LEFT); // Reset for definitions
 
@@ -395,29 +431,20 @@ public class WordMapView extends View {
         }
 
         @Override
-        public boolean onSingleTapConfirmed(MotionEvent e) {
-            if (onNodeClickListener != null) {
-                float mapX = (e.getX() - translateX) / scaleFactor;
-                float mapY = (e.getY() - translateY) / scaleFactor;
+        public boolean onSingleTapUp(MotionEvent e) {
+            float mapX = (e.getX() - translateX) / scaleFactor;
+            float mapY = (e.getY() - translateY) / scaleFactor;
 
-                for (WordNode node : nodes) {
-                    if (node.relatedness <= (1.0f - relatednessThreshold)) {
-                        if (node.lastDrawnRect.contains(mapX, mapY)) {
-                            onNodeClickListener.onNodeClick(node.data);
-                            return true;
-                        }
+            for (WordNode node : nodes) {
+                // Check if it's NOT the center node (relatedness == 0.0) before triggering click
+                if (node.relatedness > 0.0f && node.relatedness <= (1.0f - relatednessThreshold) && node.lastDrawnRect.contains(mapX, mapY)) {
+                    if (onNodeClickListener != null) {
+                        onNodeClickListener.onNodeClick(node.data);
                     }
+                    return true;
                 }
             }
-            return super.onSingleTapConfirmed(e);
-        }
-    }
-
-    @Override
-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
-        super.onLayout(changed, left, top, right, bottom);
-        if (changed) {
-            returnToCenter();
+            return false;
         }
     }
 }
