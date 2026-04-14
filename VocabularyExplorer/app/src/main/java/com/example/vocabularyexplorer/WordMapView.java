@@ -120,7 +120,7 @@ public class WordMapView extends View {
     public void setCenterWord(String word) {
         if (word == null || word.isEmpty()) return;
 
-        if (word.equalsIgnoreCase("Medicine") || word.equalsIgnoreCase("Medicine")) {
+        if (word.equalsIgnoreCase("Medicine") || word.equalsIgnoreCase("maskihkiy")) {
             loadMedicineData(getContext());
         }
         else if (word.equalsIgnoreCase("banana") || word.equalsIgnoreCase("wâkâs"))
