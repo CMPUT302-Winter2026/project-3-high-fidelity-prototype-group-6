@@ -14,3 +14,4 @@ To install and run this app, download the .apk file from the Releases tab of thi
 
 ## Resources Consulted
 - [itwewina](https://itwewina.altlab.app) was consulted to gather sample data for the project.
+- Gemini was used to help in the codebase
