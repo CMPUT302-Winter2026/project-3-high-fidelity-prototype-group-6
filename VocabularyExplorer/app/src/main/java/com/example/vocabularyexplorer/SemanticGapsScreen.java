@@ -12,7 +12,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SwitchCompat;
 import androidx.constraintlayout.widget.ConstraintLayout;
@@ -22,82 +21,37 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.bottomsheet.BottomSheetDialog;
 
-public class HomeScreen extends AppCompatActivity {
-
+public class SemanticGapsScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.home_screen);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.home_screen), (v, insets) -> {
+        setContentView(R.layout.semantic_gaps_screen);
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.semantic_gaps), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        ImageButton wordCard = findViewById(R.id.word_of_the_day_card);
-        TextView categories = findViewById(R.id.categories);
-        TextView matchingMinigame = findViewById(R.id.minigame);
-        TextView semanticGaps = findViewById(R.id.semantic_gaps);
-        EditText mainSearchInput = findViewById(R.id.search_input);
+        setupBottomBar();
+    }
 
+    private void setupBottomBar() {
         ImageButton backButton = findViewById(R.id.back_button);
+        ImageButton homeButton = findViewById(R.id.home_button);
         ImageButton searchButton = findViewById(R.id.search_button);
         ImageButton menuButton = findViewById(R.id.menu_button);
 
-        SharedPreferences sharedPreferences = getSharedPreferences("mode", MODE_PRIVATE);
-        if (sharedPreferences.getString("mode", null) == null) {
-            sharedPreferences.edit().putString("mode", "novice").apply();
-        }
-
-        Word wordOfDay = getWordOfDay();
-        wordCard.setOnClickListener(v -> {
-            Intent detailIntent = new Intent(HomeScreen.this, WordDetailScreen.class);
-            detailIntent.putExtra("word_data", wordOfDay);
-            startActivity(detailIntent);
-        });
-
-        categories.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeScreen.this, CuratedCategoriesScreen.class);
-            startActivity(intent);
-        });
-
-        matchingMinigame.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeScreen.this, MatchingMinigameScreen.class);
-            startActivity(intent);
-        });
-
-        semanticGaps.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeScreen.this, SemanticGapsScreen.class);
-            startActivity(intent);
-        });
-
-        mainSearchInput.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                performSearch(mainSearchInput.getText().toString());
-                return true;
-            }
-            return false;
-        });
-
         backButton.setOnClickListener(v -> getOnBackPressedDispatcher().onBackPressed());
+
+        homeButton.setOnClickListener(v -> {
+            Intent intent = new Intent(this, HomeScreen.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+            startActivity(intent);
+        });
+
         searchButton.setOnClickListener(v -> showSearchBottomSheet());
         menuButton.setOnClickListener(v -> showNavigationMenu());
-    }
-
-    private Word getWordOfDay() {
-        Context context = getBaseContext();
-        Word wordOfDay = new Word("pawâcakinâsis-pîsim", "1. Frost-Exploding Trees Moon\n2. Blizzard Moon\n3. December");
-        wordOfDay.setSyllabics("ᒪᐢᑭᐦᑭᐩ");
-        wordOfDay.setAdvancedLabel("NI-2");
-        wordOfDay.setIPATranscription("/ˈmʌs.kɪh.kiː/");
-        wordOfDay.setCreePhrase1(context.getString(R.string.maskihkiy_cree_phrase1));
-        wordOfDay.setEnglishPhrase1(context.getString(R.string.maskihkiy_english_phrase1));
-        wordOfDay.setCreePhrase2(context.getString(R.string.maskihkiy_cree_phrase2));
-        wordOfDay.setEnglishPhrase2(context.getString(R.string.maskihkiy_english_phrase2));
-        wordOfDay.setMorphologyImage(R.drawable.maskihkiy_word_parts);
-        wordOfDay.setMorphology(context.getString(R.string.maskihkiy_morphology));
-        return wordOfDay;
     }
 
     private void showNavigationMenu() {
@@ -114,7 +68,7 @@ public class HomeScreen extends AppCompatActivity {
 
         SharedPreferences sharedPreferences = getSharedPreferences("mode", MODE_PRIVATE);
         String currentMode = sharedPreferences.getString("mode", "novice");
-        
+
         modeSwitch.setChecked(currentMode.equals("advanced"));
         modeText.setText(currentMode.equals("advanced") ? "Advanced Mode" : "Novice Mode");
 
@@ -125,19 +79,16 @@ public class HomeScreen extends AppCompatActivity {
         });
 
         categories.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeScreen.this, CuratedCategoriesScreen.class);
-            startActivity(intent);
+            startActivity(new Intent(this, CuratedCategoriesScreen.class));
             bottomSheetDialog.dismiss();
         });
         minigame.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeScreen.this, MatchingMinigameScreen.class);
-            startActivity(intent);
+            startActivity(new Intent(this, MatchingMinigameScreen.class));
             bottomSheetDialog.dismiss();
         });
         semanticGaps.setOnClickListener(v -> {
-            Intent intent = new Intent(HomeScreen.this, SemanticGapsScreen.class);
-            startActivity(intent);
             bottomSheetDialog.dismiss();
+            // Already on semantic gaps screen
         });
         closeButton.setOnClickListener(v -> bottomSheetDialog.dismiss());
 
@@ -167,12 +118,12 @@ public class HomeScreen extends AppCompatActivity {
     private void performSearch(String searchString) {
         if (searchString == null || searchString.trim().isEmpty()) return;
         closeKeyboard();
-        Intent intent = new Intent(HomeScreen.this, WordMapScreen.class);
+        Intent intent = new Intent(this, WordMapScreen.class);
         intent.putExtra("search", searchString);
         startActivity(intent);
     }
 
-    public void closeKeyboard() {
+    private void closeKeyboard() {
         View view = this.getCurrentFocus();
         if (view != null) {
             InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);

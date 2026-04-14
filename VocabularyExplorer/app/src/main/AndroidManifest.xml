@@ -12,7 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.VocabularyExplorer">
         <activity
-            android:name=".CuratedCategoriesWordsScreen"
+            android:name=".CuratedCategoriesExpandedScreen"
             android:exported="false" />
         <activity
             android:name=".CuratedCategoriesScreen"
@@ -22,6 +22,9 @@
             android:exported="false" />
         <activity
             android:name=".MatchingMinigameScreen"
+            android:exported="false" />
+        <activity
+            android:name=".SemanticGapsScreen"
             android:exported="false" />
         <activity
             android:name=".HomeScreen"

@@ -49,9 +49,7 @@ public class CuratedCategoriesPhrasesAdapter extends RecyclerView.Adapter<Curate
             tv.setText("");
         }
 
-        // We assume the components are ordered: Cree parts first, then English parts.
-        // Or we can just map them directly if you provide 6 components.
-        // Let's assume the first 3 components are Cree (Titles) and next 3 are English (Definitions)
+        // assume the components are ordered: Cree parts first, then English parts.
         for (int i = 0; i < components.size(); i++) {
             PhraseComponent component = components.get(i);
             if (i < 3) {
@@ -64,10 +62,6 @@ public class CuratedCategoriesPhrasesAdapter extends RecyclerView.Adapter<Curate
                 definitionViews[i - 3].setBackgroundColor(component.getColor());
             }
         }
-
-        holder.wordLayout.setOnClickListener(v -> {
-            // Add click logic here if needed
-        });
     }
 
     @Override
