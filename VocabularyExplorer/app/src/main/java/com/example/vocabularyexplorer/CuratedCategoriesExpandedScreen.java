@@ -210,23 +210,59 @@ public class CuratedCategoriesExpandedScreen extends AppCompatActivity {
             wordList.add(new Word("osâwi-", "1. yellow, orange, brown"));
             wordList.add(new Word("osâwâs", "1. orange"));
 
-            ArrayList<PhraseComponent> components1 = new ArrayList<>();
-            components1.add(new PhraseComponent("maskihkî", Color.parseColor("#B9D992")));
-            components1.add(new PhraseComponent("w", Color.parseColor("#A686E6")));
-            components1.add(new PhraseComponent("iyiniw", Color.parseColor("#E9B972")));
-            components1.add(new PhraseComponent("someone who", Color.parseColor("#E9B972")));
-            components1.add(new PhraseComponent("treats", Color.parseColor("#A686E6")));
-            components1.add(new PhraseComponent("illness", Color.parseColor("#B9D992")));
-            phraseList.add(new Phrase(components1));
+//            ArrayList<PhraseComponent> components1 = new ArrayList<>();
+//            components1.add(new PhraseComponent("maskihkî", Color.parseColor("#B9D992")));
+//            components1.add(new PhraseComponent("w", Color.parseColor("#A686E6")));
+//            components1.add(new PhraseComponent("iyiniw", Color.parseColor("#E9B972")));
+//            components1.add(new PhraseComponent("someone who", Color.parseColor("#E9B972")));
+//            components1.add(new PhraseComponent("treats", Color.parseColor("#A686E6")));
+//            components1.add(new PhraseComponent("illness", Color.parseColor("#B9D992")));
+//            phraseList.add(new Phrase(components1));
+//
+//            ArrayList<PhraseComponent> components2 = new ArrayList<>();
+//            components2.add(new PhraseComponent("mihko", Color.parseColor("#FFCDD2")));
+//            components2.add(new PhraseComponent("siw", Color.parseColor("#C8E6C9")));
+//            components2.add(new PhraseComponent("", Color.TRANSPARENT));
+//            components2.add(new PhraseComponent("it is", Color.parseColor("#C8E6C9")));
+//            components2.add(new PhraseComponent("red", Color.parseColor("#FFCDD2")));
+//            components2.add(new PhraseComponent("", Color.TRANSPARENT));
+//            phraseList.add(new Phrase(components2));
 
-            ArrayList<PhraseComponent> components2 = new ArrayList<>();
-            components2.add(new PhraseComponent("mihko", Color.parseColor("#FFCDD2")));
-            components2.add(new PhraseComponent("siw", Color.parseColor("#C8E6C9")));
-            components2.add(new PhraseComponent("", Color.TRANSPARENT));
-            components2.add(new PhraseComponent("it is", Color.parseColor("#C8E6C9")));
-            components2.add(new PhraseComponent("red", Color.parseColor("#FFCDD2")));
-            components2.add(new PhraseComponent("", Color.TRANSPARENT));
-            phraseList.add(new Phrase(components2));
+            ArrayList<PhraseComponent> components3 = new ArrayList<>();
+            components3.add(new PhraseComponent("kaskitêw", Color.parseColor("#B9D992")));
+            components3.add(new PhraseComponent("â", Color.parseColor("#A686E6")));
+            components3.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            components3.add(new PhraseComponent("It is", Color.parseColor("#A686E6")));
+            components3.add(new PhraseComponent("black", Color.parseColor("#B9D992")));
+            components3.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            phraseList.add(new Phrase(components3));
+
+            ArrayList<PhraseComponent> components4 = new ArrayList<>();
+            components4.add(new PhraseComponent("watôk", Color.parseColor("#B9D992")));
+            components4.add(new PhraseComponent("nâkwan", Color.parseColor("#A686E6")));
+            components4.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            components4.add(new PhraseComponent("It is", Color.parseColor("#A686E6")));
+            components4.add(new PhraseComponent("burgundy", Color.parseColor("#B9D992")));
+            components4.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            phraseList.add(new Phrase(components4));
+
+            ArrayList<PhraseComponent> components5 = new ArrayList<>();
+            components5.add(new PhraseComponent("wâp", Color.parseColor("#B9D992")));
+            components5.add(new PhraseComponent("âwahk", Color.parseColor("#A686E6")));
+            components5.add(new PhraseComponent("â", Color.parseColor("#E9B972")));
+            components5.add(new PhraseComponent("It is", Color.parseColor("#E9B972")));
+            components5.add(new PhraseComponent("white", Color.parseColor("#B9D992")));
+            components5.add(new PhraseComponent("sand", Color.parseColor("#A686E6")));
+            phraseList.add(new Phrase(components5));
+
+            ArrayList<PhraseComponent> components6 = new ArrayList<>();
+            components6.add(new PhraseComponent("sîpihkw", Color.parseColor("#B9D992")));
+            components6.add(new PhraseComponent("isi", Color.parseColor("#A686E6")));
+            components6.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            components6.add(new PhraseComponent("S/he is", Color.parseColor("#A686E6")));
+            components6.add(new PhraseComponent("blue", Color.parseColor("#B9D992")));
+            components6.add(new PhraseComponent("", Color.parseColor("#E9B972")));
+            phraseList.add(new Phrase(components6));
         }
     }
 }
