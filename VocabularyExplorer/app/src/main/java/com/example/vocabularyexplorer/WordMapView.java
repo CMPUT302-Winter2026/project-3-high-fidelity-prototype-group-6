@@ -120,9 +120,19 @@ public class WordMapView extends View {
     public void setCenterWord(String word) {
         if (word == null || word.isEmpty()) return;
 
-        if (word.equalsIgnoreCase("Medicine")) {
-            loadDefaultData(getContext());
-        } else {
+        if (word.equalsIgnoreCase("Medicine") || word.equalsIgnoreCase("Medicine")) {
+            loadMedicineData(getContext());
+        }
+        else if (word.equalsIgnoreCase("banana") || word.equalsIgnoreCase("wâkâs"))
+        {
+            loadBananaData(getContext());
+        }
+        else if (word.equalsIgnoreCase("deer") || word.equalsIgnoreCase("apisimôsos"))
+        {
+            loadDeerData(getContext());
+        }
+        else
+        {
             nodes.clear();
             nodes.add(new WordNode(new Word(word, ""), 1000, 1000, 0.0f));
         }
@@ -151,13 +161,13 @@ public class WordMapView extends View {
         circlePaint.setColor(Color.parseColor("#80C8E6C9"));
         circlePaint.setStyle(Paint.Style.FILL);
 
-        loadDefaultData(context);
+        loadMedicineData(context);
         
         translateX = 0; 
         translateY = 0;
     }
 
-    private void loadDefaultData(Context context) {
+    private void loadMedicineData(Context context) {
         nodes.clear();
         // Relatedness: 0.0 = core, higher = more specific/less related
         nodes.add(new WordNode(new Word("Medicine", ""), 1000, 1000, 0.0f));
@@ -198,6 +208,59 @@ public class WordMapView extends View {
         bag.setMorphologyImage(R.drawable.maskimot_word_parts);
         bag.setMorphology(context.getString(R.string.maskimot_morphology));
         nodes.add(new WordNode(bag, 400, 1700, 0, 0.9f));
+    }
+
+    private void loadBananaData(Context context) {
+        nodes.clear();
+        // Relatedness: 0.0 = core, higher = more specific/less related
+        nodes.add(new WordNode(new Word("Banana", ""), 1000, 1000, 0.0f));
+
+        Word yellow = new Word("osâwâw", "1. it is yellow\n2. it is orange\n3. it is brown");
+        yellow.setSyllabics("ᐅᓵᐚᐤ");
+        yellow.setAdvancedLabel("VII-2v");
+        yellow.setIPATranscription("/ʊˈsɑːwɑːw/");
+        yellow.setCreePhrase1("pakaski-osâwâw");
+        yellow.setEnglishPhrase1("it is orange");
+        yellow.setCreePhrase2("kaskitêw-osâwâw");
+        yellow.setEnglishPhrase2("it is brown");
+        yellow.setMorphologyImage(R.drawable.maskihkiy_word_parts);
+        yellow.setMorphology(context.getString(R.string.maskihkiy_morphology));
+        nodes.add(new WordNode(yellow, 600, 700, 0, 0.4f));
+
+        Word berry = new Word("mînis", "1. berry\n2. a wild berry or fruit");
+        berry.setCreePhrase1("maskihkîwiskwêw anima.");
+        berry.setEnglishPhrase1("That is a nurse.");
+        nodes.add(new WordNode(berry, 900, 200, 3, 0.8f));
+
+        Word banana = new Word("banana", "1. banana");
+        nodes.add(new WordNode(banana, 1400, 1000, 0, 0.2f));
+
+        Word peels = new Word("pîhtonêw", "1. s/he peels it");
+        nodes.add(new WordNode(peels, 1100, 1450, 0, 0.5f));
+
+        Word eats = new Word("mîciw", "1. s/he eats s.t., s/he has s.t. as food\n2. He eats it\n3. s/he eats it or consumes it");
+        nodes.add(new WordNode(eats, 400, 1700, 0, 0.9f));
+    }
+
+    private void loadDeerData(Context context) {
+        nodes.clear();
+        // Relatedness: 0.0 = core, higher = more specific/less related
+        nodes.add(new WordNode(new Word("Deer", ""), 1000, 1000, 0.0f));
+
+        Word elk = new Word("wâwâskêsiw", "1. elk, wapiti\n2. deer, red deer\n3. reindeer");
+        nodes.add(new WordNode(elk, 600, 700, 0, 0.4f));
+
+        Word hunt = new Word("mâcîw", "1. s/he hunts\n2. s/he goes hunting\n3. s/he hunts big game");
+        nodes.add(new WordNode(hunt, 900, 200, 3, 0.8f));
+
+        Word deer = new Word("apisimôsos", "1. deer, red deer\n2. mule deer, jumping deer\n3. A deer");
+        nodes.add(new WordNode(deer, 1500, 1000, 0, 0.2f));
+
+        Word venison = new Word("apisimôsowiyâs", "1. venison, deer meat\n2. one piece of venison");
+        nodes.add(new WordNode(venison, 1100, 1450, 0, 0.5f));
+
+        Word tree = new Word("nimitahikêwâhtik", "1. tree used by deer for rubbing antlers");
+        nodes.add(new WordNode(tree, 400, 1700, 0, 0.9f));
     }
 
     @Override
